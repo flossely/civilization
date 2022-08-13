@@ -18,7 +18,7 @@ foreach ($paradigmArr as $key=>$value) {
 if (file_exists('year')) {
     $today = file_get_contents('year');
 } else {
-    $today = $paradigmData['starting_year'];
+    $today = $paradigmData['default_year'];
 }
 
 if (file_exists('locale')) {
