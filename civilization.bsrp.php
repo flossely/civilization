@@ -1,13 +1,26 @@
 <?php
 
-// GETTING CURRENT YEAR FROM FILE
+if (file_exists('paradigm')) {
+    $paradigm = file_get_contents('paradigm');
+} else {
+    $paradigm = 'default';
+}
+$paradigmFile = file_get_contents($paradigm.'.par');
+$paradigmArr = explode('|[1]|', $paradigmFile);
+$paradigmData = [];
+foreach ($paradigmArr as $key=>$value) {
+    $paradigmExp = explode('|[>]|', $value);
+    $paradigmElemProp = $paradigmExp[0];
+    $paradigmElemVal = $paradigmExp[1];
+    $paradigmData[$paradigmElemProp] = $paradigmElemVal;
+}
+
 if (file_exists('year')) {
     $today = file_get_contents('year');
 } else {
-    $today = -2000;
+    $today = $paradigmData['starting_year'];
 }
 
-// GETTING CURRENT LOCALE FROM FILE
 if (file_exists('locale')) {
     $localeOpen = file_get_contents('locale');
     $locale = ($localeOpen != '') ? $localeOpen : 'en';
@@ -16,10 +29,8 @@ if (file_exists('locale')) {
 }
 $lingua = $locale;
 
-// OPEN CIV VOCABULARY
 include 'cividictus.php';
 
-// FUNCTIONS USED IN THE SCRIPT
 function yearconv($year)
 {
     if ($year >= 0) {
@@ -57,20 +68,15 @@ function erayear($year)
     return $getEra;
 }
 
-// ACCESING CONSTANTS AND ERA-DEPENDENT DATA
 include 'civconst.php';
 include 'civeramap.php';
 
-// DEFINE THE CIV ARRAY VARIABLE
 $civ = [];
 
-// GET CIV ID FROM HTTP REQUEST
 $add = $_REQUEST['id'];
 
-// GETTING ERA VALUE BY THE CURRENT YEAR
 $era = erayear($today);
 
-// DOWNLOADING SELECTED CIV DATA FILE
 if (file_exists($add.'-civ')) {
     chmod($add.'-civ', 0777);
     rename($add.'-civ', $add.'-civ.d');
@@ -85,21 +91,17 @@ if (file_exists($add.'-civ.d')) {
     rename($add.'-civ.d', $add.'-civ');
 }
 
-// INCLUDE CURRENT CIV DATA FROM DOWNLOADED FILE
 include $add.'.civ.php';
 
-// OVERRIDE CURRENT ERA VALUE IF NOT EXISTING IN CURRENT CIV DATA ARRAY
 if (!array_key_exists($era, $civ[$add]['var'])) {
     $era = array_key_first($civ[$add]['var']);
 }
 
-// CREATE CIV DIRECTORY IF NOT EXISTING
 if (!file_exists($add)) {
     mkdir($add);
     chmod($add, 0777);
 }
 
-// SET CIV PARAMETERS IF THEY NOT EXIST TO PREVENT OVERRIDE BY NEW CIV QUERY
 if (!file_exists($add.'/coord')) {
     file_put_contents($add.'/coord', $civ[$add]['coord']);
     chmod($add.'/coord', 0777);
@@ -125,7 +127,6 @@ if (!file_exists($add.'/born')) {
     chmod($add.'/born', 0777);
 }
 
-// OVERRIDING CIV DATA WITH THOSE OF THE ERA OF CURRENT YEAR
 file_put_contents($add.'/name', $civ[$add]['var'][$era]['name'][$lingua]);
 chmod($add.'/name', 0777);
 file_put_contents($add.'/leader', $civ[$add]['var'][$era]['leader'][$lingua]);
@@ -141,7 +142,6 @@ if (isset($civ[$add]['var'][$era]['title'])) {
     chmod($add.'/title', 0777);
 }
 
-// CREATING ERA INFO FOR SELECTED CIV
 $startyear = $civeramap[$era]['started'];
 $endyear = $civeramap[$era]['ended'];
 if ($startyear == INFINITY_BC) {
@@ -158,7 +158,6 @@ $erainfo = $civeramap[$era]['era'] . ' (' . $yrex . ' - ' . $yrad . ')';
 file_put_contents($add.'/erainfo.txt', $erainfo);
 chmod($add.'/erainfo.txt', 0777);
 
-// CREATING CIV INFO
 if (isset($civ[$add]['var'][$era]['title'])) {
     if ($civ[$add]['var'][$era]['government'] == DEMOCRACY || $civ[$add]['var'][$era]['government'] == FASCISM || $civ[$add]['var'][$era]['government'] == COMMUNISM) {
         $civbard = $civ[$add]['var'][$era]['title'] . ' ' . $cividictus[$lingua]['de'] . ' ' . $civ[$add]['var'][$era]['name'][$lingua] . ', ' . $civ[$add]['var'][$era]['leader'][$lingua];
@@ -172,7 +171,6 @@ $civinfo = $civbard . ' (' . $civ[$add]['var'][$era]['economy'] . ' ' . $civ[$ad
 file_put_contents($add.'/civinfo.txt', $civinfo);
 chmod($add.'/civinfo.txt', 0777);
 
-// DOWNLOADING CIV FLAG AND SETTING IT AS ICON
 if (file_exists($add.'-'.$era)) {
     chmod($add.'-'.$era, 0777);
     rename($add.'-'.$era, $add.'-'.$era.'.d');
