@@ -1,19 +1,25 @@
 <?php
 
+function getParadigmInfo($id): array {
+    $str = file_get_contents($id.'.par');
+    $arr = explode('|[1]|', $str);
+    $obj = [];
+    foreach ($arr as $line) {
+        $div = explode('|[>]|', $line);
+        $prop = $div[0];
+        $val = $div[1];
+        $obj[$prop] = $val;
+    }
+    
+    return $obj;
+}
+
 if (file_exists('paradigm')) {
     $paradigm = file_get_contents('paradigm');
 } else {
     $paradigm = 'default';
 }
-$paradigmFile = file_get_contents($paradigm.'.par');
-$paradigmArr = explode('|[1]|', $paradigmFile);
-$paradigmData = [];
-foreach ($paradigmArr as $key=>$value) {
-    $paradigmExp = explode('|[>]|', $value);
-    $paradigmElemProp = $paradigmExp[0];
-    $paradigmElemVal = $paradigmExp[1];
-    $paradigmData[$paradigmElemProp] = $paradigmElemVal;
-}
+$paradigmData = getParadigmInfo($paradigm);
 
 if (file_exists('year')) {
     $today = file_get_contents('year');
@@ -72,9 +78,7 @@ include 'civconst.php';
 include 'civeramap.php';
 
 $civ = [];
-
 $add = $_REQUEST['id'];
-
 $era = erayear($today);
 
 if (file_exists($add.'-civ')) {
@@ -92,7 +96,6 @@ if (file_exists($add.'-civ.d')) {
 }
 
 include $add.'.civ.php';
-
 if (!array_key_exists($era, $civ[$add]['var'])) {
     $era = array_key_first($civ[$add]['var']);
 }
