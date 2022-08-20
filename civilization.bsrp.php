@@ -1,7 +1,7 @@
 <?php
 
-function getParadigmInfo($id): array {
-    $str = file_get_contents($id.'.par');
+function parseArrayFile($name): array {
+    $str = file_get_contents($name);
     $arr = explode('|[1]|', $str);
     $obj = [];
     foreach ($arr as $line) {
@@ -19,7 +19,7 @@ if (file_exists('paradigm')) {
 } else {
     $paradigm = 'default';
 }
-$paradigmData = getParadigmInfo($paradigm);
+$paradigmData = parseArrayFile($paradigm.'.par');
 
 if (file_exists('year')) {
     $today = file_get_contents('year');
