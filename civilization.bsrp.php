@@ -1,7 +1,28 @@
 <?php
 
 include 'basefunc.php';
-include 'dataload.php';
+
+if (file_exists('paradigm')) {
+    $paradigm = file_get_contents('paradigm');
+} else {
+    $paradigm = 'default';
+}
+$paradigmData = parseArrayFile($paradigm.'.par');
+
+if (file_exists('year')) {
+    $today = file_get_contents('year');
+} else {
+    $today = $paradigmData['default_year'];
+}
+
+if (file_exists('locale')) {
+    $localeOpen = file_get_contents('locale');
+    $locale = ($localeOpen != '') ? $localeOpen : 'en';
+} else {
+    $locale = 'en';
+}
+$lingua = $locale;
+
 include 'cividictus.php';
 
 function yearconv($year)
