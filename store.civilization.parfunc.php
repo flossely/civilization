@@ -9,13 +9,11 @@ if ($proUseWeapon !== null) {
 } else {
     $proForce = 1;
 }
-
 if ($subUseWeapon !== null) {
     $subForce = $subUseWeapon['damage'];
 } else {
     $subForce = 1;
 }
-
 if ($objUseWeapon !== null) {
     $objForce = $objUseWeapon['damage'];
 } else {
