@@ -1,13 +1,10 @@
 <?php
 
-$searchProIn = '.';
-$searchProFor = $searchProIn;
-$objectsProList = str_replace($searchProFor.'/','',(glob($searchProFor.'/*.weapon.obj')));
-$objectsProCount = count($objectsProList);
-if (!empty($objectsProList)) {
-    $randomObjectProNum = rand(0, $objectsProCount - 1);
-    $randomObjectPro = $objectsProList[$randomObjectProNum];
-    $proUseWeapon = getArrayFromFile('./'.$randomObjectPro);
+$proUseWeapon = shopFor('.', 'weapon');
+$subUseWeapon = shopFor('./'.$sub, 'weapon');
+$objUseWeapon = shopFor('./'.$obj, 'weapon');
+
+if ($proUseWeapon !== null) {
     $proWeaponName = $proUseWeapon['name'];
     $proWeaponPrice = $proUseWeapon['price'] * ratioCalc($spacedictus[$subLingo]['curval'], $spacedictus[$objLingo]['curval']);
     $proForce = $proUseWeapon['damage'];
@@ -17,18 +14,7 @@ if (!empty($objectsProList)) {
     $proForce = 1;
 }
 
-$subMove = power('move', $subRating);
-$subReach = power('reach', $subRating);
-$subShield = power('shield', $subRating);
-$subHeal = power('heal', $subRating);
-$searchSubIn = '.';
-$searchSubFor = $searchSubIn.'/'.$sub;
-$objectsSubList = str_replace($searchSubFor.'/','',(glob($searchSubFor.'/*.weapon.obj')));
-$objectsSubCount = count($objectsSubList);
-if (!empty($objectsSubList)) {
-    $randomObjectSubNum = rand(0, $objectsSubCount - 1);
-    $randomObjectSub = $objectsSubList[$randomObjectSubNum];
-    $subUseWeapon = getArrayFromFile('./'.$sub.'/'.$randomObjectSub);
+if ($subUseWeapon !== null) {
     $subWeaponName = $subUseWeapon['name'];
     $subWeaponPrice = $subUseWeapon['price'] * ratioCalc($spacedictus[$subLingo]['curval'], $spacedictus[$objLingo]['curval']);
     $subForce = $subUseWeapon['damage'];
@@ -38,18 +24,7 @@ if (!empty($objectsSubList)) {
     $subForce = 1;
 }
 
-$objMove = power('move', $objRating);
-$objReach = power('reach', $objRating);
-$objShield = power('shield', $objRating);
-$objHeal = power('heal', $objRating);
-$searchObjIn = '.';
-$searchObjFor = $searchObjIn.'/'.$obj;
-$objectsObjList = str_replace($searchObjFor.'/','',(glob($searchObjFor.'/*.weapon.obj')));
-$objectsObjCount = count($objectsObjList);
-if (!empty($objectsObjList)) {
-    $randomObjectObjNum = rand(0, $objectsObjCount - 1);
-    $randomObjectObj = $objectsObjList[$randomObjectObjNum];
-    $objUseWeapon = getArrayFromFile('./'.$obj.'/'.$randomObjectObj);
+if ($objUseWeapon !== null) {
     $objWeaponName = $objUseWeapon['name'];
     $objWeaponPrice = $objUseWeapon['price'] * ratioCalc($spacedictus[$subLingo]['curval'], $spacedictus[$objLingo]['curval']);
     $objForce = $objUseWeapon['damage'];

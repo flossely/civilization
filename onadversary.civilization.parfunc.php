@@ -15,6 +15,26 @@ if ($subAction == "pass") {
         "] " .
         $spacedictus[$proLingo]["pass"] .
         "<br>";
+} elseif ($subAction == "nuke") {
+    $objRating -= $subForce + $objShield;
+    $subRating += $subForce - $objShield;
+    $subScore += 5;
+    echo $turnNum .
+        " : " .
+        $subModeSign .
+        $sub .
+        "[" .
+        $subRating .
+        "] " .
+        $subWeaponName .
+        " (" .
+        $subForce .
+        ") " .
+        $objModeSign .
+        $obj .
+        "[" .
+        $objRating .
+        "]<br>";
 } elseif ($subAction == "agent") {
     $subOpsList = ['navigate', 'attack'];
     $subOpsCount = count($subOpsList);
