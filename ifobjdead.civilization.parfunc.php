@@ -6,13 +6,13 @@ $subAction = $subActions[rand(0, $subActionCount - 1)];
 if ($subAction == "pass") {
     $subRating += 0.01;
     $subScore += 1;
-    echo turnFormat($paradigm, $today) .
+    echo $turnNum .
         " : " .
         $subModeSign .
         $sub .
         "[" .
         $subRating .
         "] " .
-        $spacedictus[$lingua]["pass"] .
+        $spacedictus[$proLingo]["pass"] .
         "<br>";
 }

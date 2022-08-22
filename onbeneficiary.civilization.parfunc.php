@@ -7,13 +7,13 @@ if ($subAction == "envoy") {
 } elseif ($subAction == "pass") {
     $subRating += 0.01;
     $subScore += 1;
-    echo turnFormat($paradigm, $today) .
+    echo $turnNum .
         " : " .
         $subModeSign .
         $sub .
         "[" .
         $subRating .
         "] " .
-        $spacedictus[$lingua]["pass"] .
+        $spacedictus[$proLingo]["pass"] .
         "<br>";
 }
