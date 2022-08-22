@@ -5,6 +5,8 @@ $subUseWeapon = shopFor('./'.$sub, 'weapon');
 $objUseWeapon = shopFor('./'.$obj, 'weapon');
 
 if ($proUseWeapon !== null) {
+    $proWeaponObjID = $proUseWeapon['object_id'];
+    $proWeaponObjClass = $proUseWeapon['object_class'];
     $proWeaponName = $proUseWeapon['name'];
     $proWeaponPrice = $proUseWeapon['price'] * ratioCalc($spacedictus[$subLingo]['curval'], $spacedictus[$objLingo]['curval']);
     $proForce = $proUseWeapon['damage'];
@@ -15,6 +17,8 @@ if ($proUseWeapon !== null) {
 }
 
 if ($subUseWeapon !== null) {
+    $subWeaponObjID = $subUseWeapon['object_id'];
+    $subWeaponObjClass = $subUseWeapon['object_class'];
     $subWeaponName = $subUseWeapon['name'];
     $subWeaponPrice = $subUseWeapon['price'] * ratioCalc($spacedictus[$subLingo]['curval'], $spacedictus[$objLingo]['curval']);
     $subForce = $subUseWeapon['damage'];
@@ -25,6 +29,8 @@ if ($subUseWeapon !== null) {
 }
 
 if ($objUseWeapon !== null) {
+    $objWeaponObjID = $objUseWeapon['object_id'];
+    $objWeaponObjClass = $objUseWeapon['object_class'];
     $objWeaponName = $objUseWeapon['name'];
     $objWeaponPrice = $objUseWeapon['price'] * ratioCalc($spacedictus[$subLingo]['curval'], $spacedictus[$objLingo]['curval']);
     $objForce = $objUseWeapon['damage'];
