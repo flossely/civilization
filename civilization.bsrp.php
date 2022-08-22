@@ -1,6 +1,31 @@
 <?php
 
-include 'basefunc.php';
+function parseArrayFile($name): array {
+    $str = file_get_contents($name);
+    $arr = explode('|[1]|', $str);
+    $obj = [];
+    foreach ($arr as $line) {
+        $div = explode('|[>]|', $line);
+        $prop = $div[0];
+        $val = $div[1];
+        $obj[$prop] = $val;
+    }
+    
+    return $obj;
+}
+
+function parseGetData($data): array {
+    $parse = explode('|[1]|', $data);
+    $arr = [];
+    foreach ($parse as $load) {
+        $line = explode('|[>]|', $load);
+        $prop = $line[0];
+        $value = $line[1];
+        $arr[$prop] = $value;
+    }
+    
+    return $arr;
+}
 
 if (file_exists('paradigm')) {
     $paradigm = file_get_contents('paradigm');
