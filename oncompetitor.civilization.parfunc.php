@@ -16,7 +16,7 @@ if ($subAction == "pass") {
         $spacedictus[$proLingo]["pass"] .
         "<br>";
 } elseif ($subAction == "agent") {
-    $subOpsList = rand('navigate', 'attack');
+    $subOpsList = ['navigate', 'attack'];
     $subOpsCount = count($subOpsList);
     $subOper = $subOpsList[rand(0, $subOpsCount - 1)];
     if ($subOper == 'navigate') {
