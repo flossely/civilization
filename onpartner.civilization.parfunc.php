@@ -1,18 +1,18 @@
 <?php
 
-$subActions = ["pass"];
+$subActions = ["pass", "explore"];
 $subActionCount = count($subActions);
 $subAction = $subActions[rand(0, $subActionCount - 1)];
+
 if ($subAction == "pass") {
     $subRating += 0.01;
     $subScore += 1;
-    echo $turnNum .
-        " : " .
-        $subModeSign .
-        $sub .
-        "[" .
-        $subRating .
-        "] " .
-        $spacedictus[$proLingo]["pass"] .
-        "<br>";
+    echo $turnNum." : ".$subHalfNotation.' '.$spacedictus[$proLingo]["pass"]."<br>";
+} elseif ($subAction == "explore") {
+    $msgBox = movement($turnNum, $subHalfNotation, $subX, $subY, $subZ, 3, $subMove);
+    $subX = $msgBox['x'];
+    $subY = $msgBox['y'];
+    $subZ = $msgBox['z'];
+    $subRating += 0.01;
+    $subScore += 1;
 }

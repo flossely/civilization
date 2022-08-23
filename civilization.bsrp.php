@@ -143,6 +143,13 @@ if (!file_exists($add.'/born')) {
     chmod($add.'/born', 0777);
 }
 
+if (!file_exists($add.'/home.coord')) {
+    file_put_contents($add.'/home.coord', $civ[$add]['coord']);
+    chmod($add.'/home.coord', 0777);
+}
+file_put_contents($add.'/settle.coord', $civ[$add]['coord']);
+chmod($add.'/settle.coord', 0777);
+
 file_put_contents($add.'/name', $civ[$add]['var'][$era]['name'][$lingua]);
 chmod($add.'/name', 0777);
 file_put_contents($add.'/leader', $civ[$add]['var'][$era]['leader'][$lingua]);

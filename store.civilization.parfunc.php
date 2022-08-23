@@ -1,8 +1,16 @@
 <?php
 
+$proUseItem = shopFor('.', 'item');
+$subUseItem = shopFor($sub, 'item');
+$objUseItem = shopFor($obj, 'item');
+
 $proUseWeapon = shopFor('.', 'weapon');
 $subUseWeapon = shopFor($sub, 'weapon');
 $objUseWeapon = shopFor($obj, 'weapon');
+
+$proUseVehicle = shopFor('.', 'vehicle');
+$subUseVehicle = shopFor($sub, 'vehicle');
+$objUseVehicle = shopFor($obj, 'vehicle');
 
 if ($proUseWeapon !== null) {
     $proForceType = $proUseWeapon['name'];
@@ -24,4 +32,45 @@ if ($objUseWeapon !== null) {
 } else {
     $objForceType = 'melee';
     $objForce = 1;
+}
+
+if ($proUseMelee !== null) {
+    $proMeleeType = $proUseMelee['name'];
+    $proMeleeForce = $proUseMelee['damage'];
+} else {
+    $proMeleeType = 'melee';
+    $proMeleeForce = 1;
+}
+if ($subUseMelee !== null) {
+    $subMeleeType = $subUseMelee['name'];
+    $subMeleeForce = $subUseMelee['damage'];
+} else {
+    $subMeleeType = 'melee';
+    $subMeleeForce = 1;
+}
+if ($objUseMelee !== null) {
+    $objMeleeType = $objUseMelee['name'];
+    $objMeleeForce = $objUseMelee['damage'];
+} else {
+    $objMeleeType = 'melee';
+    $objMeleeForce = 1;
+}
+
+if ($proUseVehicle !== null) {
+    $proVehicleName = $proUseVehicle['name'];
+    $proVehicleType = $proUseVehicle['type'];
+    $proVehicleSpeed = $proUseVehicle['speed'];
+    $proVehicleDamage = $proUseVehicle['damage'];
+}
+if ($subUseVehicle !== null) {
+    $subVehicleName = $subUseVehicle['name'];
+    $subVehicleType = $subUseVehicle['type'];
+    $subVehicleSpeed = $subUseVehicle['speed'];
+    $subVehicleDamage = $subUseVehicle['damage'];
+}
+if ($objUseVehicle !== null) {
+    $objVehicleName = $objUseVehicle['name'];
+    $objVehicleType = $objUseVehicle['type'];
+    $objVehicleSpeed = $objUseVehicle['speed'];
+    $objVehicleDamage = $objUseVehicle['damage'];
 }
