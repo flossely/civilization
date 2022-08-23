@@ -8,9 +8,9 @@ $proUseWeapon = shopFor('.', 'weapon');
 $subUseWeapon = shopFor($sub, 'weapon');
 $objUseWeapon = shopFor($obj, 'weapon');
 
-$proUseVehicle = shopFor('.', 'vehicle');
-$subUseVehicle = shopFor($sub, 'vehicle');
-$objUseVehicle = shopFor($obj, 'vehicle');
+$proUseMelee = shopFor('.', 'melee');
+$subUseMelee = shopFor($sub, 'melee');
+$objUseMelee = shopFor($obj, 'melee');
 
 if ($proUseWeapon !== null) {
     $proForceType = $proUseWeapon['name'];
@@ -54,23 +54,4 @@ if ($objUseMelee !== null) {
 } else {
     $objMeleeType = 'melee';
     $objMeleeForce = 1;
-}
-
-if ($proUseVehicle !== null) {
-    $proVehicleName = $proUseVehicle['name'];
-    $proVehicleType = $proUseVehicle['type'];
-    $proVehicleSpeed = $proUseVehicle['speed'];
-    $proVehicleDamage = $proUseVehicle['damage'];
-}
-if ($subUseVehicle !== null) {
-    $subVehicleName = $subUseVehicle['name'];
-    $subVehicleType = $subUseVehicle['type'];
-    $subVehicleSpeed = $subUseVehicle['speed'];
-    $subVehicleDamage = $subUseVehicle['damage'];
-}
-if ($objUseVehicle !== null) {
-    $objVehicleName = $objUseVehicle['name'];
-    $objVehicleType = $objUseVehicle['type'];
-    $objVehicleSpeed = $objUseVehicle['speed'];
-    $objVehicleDamage = $objUseVehicle['damage'];
 }
