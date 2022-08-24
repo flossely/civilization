@@ -27,6 +27,34 @@ function parseGetData($data): array {
     return $arr;
 }
 
+function gitPerform($host = 'https://github.com', $repo, $branch, $user, $file, $dest, $name) {
+    if (file_exists($repo)) {
+        chmod($repo, 0777);
+        rename($repo, $repo.'.d');
+    }
+    if ($branch != '') {
+        exec('git clone -b '.$branch.' '.$host.'/'.$user.'/'.$repo);
+    } else {
+        exec('git clone '.$host.'/'.$user.'/'.$repo);
+    }
+    exec('chmod -R 777 .');
+    chmod($repo, 0777);
+    gitOperation($repo, $file, $dest, $name);
+    exec('chmod -R 777 .');
+    exec('rm -rf '.$repo);
+    if (file_exists($repo.'.d')) {
+        chmod($repo.'.d', 0777);
+        rename($repo.'.d', $repo);
+    }
+}
+
+function gitOperation($repo, $filename, $dest, $newname) {
+    if (file_exists('./'.$repo.'/'.$filename)) {
+        copy('./'.$repo.'/'.$filename, './'.$dest.'/'.$newname);
+        chmod('./'.$dest.'/'.$newname, 0777);
+    }
+}
+
 if (file_exists('paradigm')) {
     $paradigm = file_get_contents('paradigm');
 } else {
@@ -93,20 +121,11 @@ include 'civeramap.php';
 $civ = [];
 $add = $_REQUEST['id'];
 $era = erayear($today);
+$dataString = $_REQUEST['data'];
 
-if (file_exists($add.'-civ')) {
-    chmod($add.'-civ', 0777);
-    rename($add.'-civ', $add.'-civ.d');
-}
-exec('git clone https://github.com/civhub/'.$add.'-civ');
-chmod($add.'-civ', 0777);
-copy('./'.$add.'-civ/'.$add.'.civ.php', './'.$add.'.civ.php');
-exec('chmod -R 777 .');
-exec('rm -rf '.$add.'-civ');
-if (file_exists($add.'-civ.d')) {
-    chmod($add.'-civ.d', 0777);
-    rename($add.'-civ.d', $add.'-civ');
-}
+$objMeta = parseGetData($dataString);
+
+gitPerform('https://github.com', $add.'-civ', '', 'civhub', $add.'.civ.php', $add, $add.'.civ.php');
 
 include $add.'.civ.php';
 if (!array_key_exists($era, $civ[$add]['var'])) {
@@ -127,21 +146,24 @@ if (!file_exists($add.'/rating')) {
     chmod($add.'/rating', 0777);
 }
 if (!file_exists($add.'/mode')) {
-    file_put_contents($add.'/mode', 0);
+    file_put_contents($add.'/mode', $$paradigmData['default_mode']);
     chmod($add.'/mode', 0777);
 }
 if (!file_exists($add.'/score')) {
-    file_put_contents($add.'/score', 0);
+    file_put_contents($add.'/score', $paradigmData['default_score']);
     chmod($add.'/score', 0777);
 }
 if (!file_exists($add.'/money')) {
-    file_put_contents($add.'/money', 0);
+    file_put_contents($add.'/money', $paradigmData['default_money']);
     chmod($add.'/money', 0777);
 }
 if (!file_exists($add.'/born')) {
     file_put_contents($add.'/born', $today);
     chmod($add.'/born', 0777);
 }
+
+file_put_contents($add.'/locale', $lingua);
+chmod($add.'/locale', 0777);
 
 if (!file_exists($add.'/home.coord')) {
     file_put_contents($add.'/home.coord', $civ[$add]['coord']);
@@ -160,8 +182,6 @@ file_put_contents($add.'/economy', $civ[$add]['var'][$era]['economy']);
 chmod($add.'/economy', 0777);
 file_put_contents($add.'/government', $civ[$add]['var'][$era]['government']);
 chmod($add.'/government', 0777);
-file_put_contents($add.'/locale', $lingua);
-chmod($add.'/locale', 0777);
 
 if (isset($civ[$add]['var'][$era]['title'])) {
     file_put_contents($add.'/title', $civ[$add]['var'][$era]['title']);
@@ -197,16 +217,4 @@ $civinfo = $civbard . ' (' . $civ[$add]['var'][$era]['economy'] . ' ' . $civ[$ad
 file_put_contents($add.'/civinfo.txt', $civinfo);
 chmod($add.'/civinfo.txt', 0777);
 
-if (file_exists($add.'-'.$era)) {
-    chmod($add.'-'.$era, 0777);
-    rename($add.'-'.$era, $add.'-'.$era.'.d');
-}
-exec('git clone https://github.com/civhub/'.$add.'-'.$era);
-chmod($add.'-'.$era, 0777);
-copy('./'.$add.'-'.$era.'/favicon.png', './'.$add.'/favicon.png');
-exec('chmod -R 777 .');
-exec('rm -rf '.$add.'-'.$era);
-if (file_exists($add.'-'.$era.'.d')) {
-    chmod($add.'-'.$era.'.d', 0777);
-    rename($add.'-'.$era.'.d', $add.'-'.$era);
-}
+gitPerform('https://github.com', $add.'-'.$era, 'main', 'civhub', 'favicon.png', $add, 'favicon.png');
