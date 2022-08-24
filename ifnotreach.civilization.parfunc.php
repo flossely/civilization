@@ -7,9 +7,9 @@ $subAction = $subActions[rand(0, $subActionCount - 1)];
 if ($subAction == "pass") {
     $subRating += 0.01;
     $subScore += 1;
-    echo $turnNum." : ".$subHalfNotation.' '.$spacedictus[$proLingo]["pass"]."<br>";
+    echo $turnNum." : ".$subFullName.' '.$spacedictus[$proLingo]["pass"]."<br>";
 } elseif ($subAction == "explore") {
-    $msgBox = movement($turnNum, $subHalfNotation, $subX, $subY, $subZ, 3, $subMove);
+    $msgBox = movement($turnNum, $subFullName, $subX, $subY, $subZ, 3, $subMove);
     $subX = $msgBox['x'];
     $subY = $msgBox['y'];
     $subZ = $msgBox['z'];

@@ -12,9 +12,9 @@ include 'mine.civilization.parfunc.php';
 if ($subAction == "pass") {
     $subRating += 0.01;
     $subScore += 1;
-    echo $turnNum." : ".$subHalfNotation.' '.$spacedictus[$proLingo]["pass"]."<br>";
+    echo $turnNum." : ".$subFullName.' '.$spacedictus[$proLingo]["pass"]."<br>";
 } elseif ($subAction == "explore") {
-    $msgBox = movement($turnNum, $subHalfNotation, $subX, $subY, $subZ, 3, $subMove);
+    $msgBox = movement($turnNum, $subFullName, $subX, $subY, $subZ, 3, $subMove);
     $subX = $msgBox['x'];
     $subY = $msgBox['y'];
     $subZ = $msgBox['z'];
@@ -26,23 +26,23 @@ if ($subAction == "pass") {
     $subMine = $subRes[rand(0, $subResCount - 1)];
     if ($subMine == 'gold') {
         $subGold += 1;
-        echo $turnNum." : ".$subNotation." ".$spacedictus[$proLingo]["mine"]." 1 ".$spacedictus[$proLingo]["gold"]."<br>";
+        echo $turnNum." : ".$subFullName." ".$spacedictus[$proLingo]["mine"]." 1 ".$spacedictus[$proLingo]["gold"]."<br>";
         file_put_contents($sub.'/gold', $subGold);
         chmod($sub.'/gold', 0777);
     } elseif ($subMine == 'uranium') {
         $subUranium += 1;
-        echo $turnNum." : ".$subNotation." ".$spacedictus[$proLingo]["mine"]." 1 ".$spacedictus[$proLingo]["uranium"]."<br>";
+        echo $turnNum." : ".$subFullName." ".$spacedictus[$proLingo]["mine"]." 1 ".$spacedictus[$proLingo]["uranium"]."<br>";
         file_put_contents($sub.'/uranium', $subUranium);
         chmod($sub.'/uranium', 0777);
     }
 } elseif ($subAction == "treasure") {
     if ($subGold > 0) {
         $subMoney += $subMoney + $subScore * $subGold;
-        echo $turnNum." : ".$subHalfNotation.' '.$spacedictus[$proLingo]["treasure"]."<br>";
+        echo $turnNum." : ".$subFullName.' '.$spacedictus[$proLingo]["treasure"]."<br>";
     } else {
         $subRating += 0.01;
         $subScore += 1;
-        echo $turnNum." : ".$subHalfNotation.' '.$spacedictus[$proLingo]["pass"]."<br>";
+        echo $turnNum." : ".$subFullName.' '.$spacedictus[$proLingo]["pass"]."<br>";
     }
 } elseif ($subAction == 'buy') {
     $msgBox = initExchange($thisParadigm, $yearToday, $obj, $sub, $objMoney, $subMoney, ratioCalc($objEconVal, $subEconVal), $objUseItem);
@@ -56,25 +56,25 @@ if ($subAction == "pass") {
     if ($subUranium > 0) {
         $subNukes += 1;
         $subScore += 10;
-        echo $turnNum." : ".$subHalfNotation.' '.$spacedictus[$proLingo]["produce"].' '.$spacedictus[$proLingo]["nuke"]."<br>";
+        echo $turnNum." : ".$subFullName.' '.$spacedictus[$proLingo]["produce"].' '.$spacedictus[$proLingo]["nuke"]."<br>";
         file_put_contents($sub.'/nukes', $subNukes);
         chmod($sub.'/nukes', 0777);
     } else {
         $subRating += 0.01;
         $subScore += 1;
-        echo $turnNum." : ".$subHalfNotation.' '.$spacedictus[$proLingo]["pass"]."<br>";
+        echo $turnNum." : ".$subFullName.' '.$spacedictus[$proLingo]["pass"]."<br>";
     }
 } elseif ($subAction == 'make_thermonuke') {
     if ($subUranium > 0) {
         $subThermoNukes += 1;
         $subScore += 20;
-        echo $turnNum." : ".$subHalfNotation.' '.$spacedictus[$proLingo]["produce"].' '.$spacedictus[$proLingo]["nuke"]."<br>";
+        echo $turnNum." : ".$subFullName.' '.$spacedictus[$proLingo]["produce"].' '.$spacedictus[$proLingo]["nuke"]."<br>";
         file_put_contents($sub.'/thermonukes', $subThermoNukes);
         chmod($sub.'/thermonukes', 0777);
     } else {
         $subRating += 0.01;
         $subScore += 1;
-        echo $turnNum." : ".$subHalfNotation.' '.$spacedictus[$proLingo]["pass"]."<br>";
+        echo $turnNum." : ".$subFullName.' '.$spacedictus[$proLingo]["pass"]."<br>";
     }
 } elseif ($subAction == "nuke") {
     if ($subNukes > 0) {
@@ -82,13 +82,13 @@ if ($subAction == "pass") {
         $subRating += $subForce * 5;
         $subNukes -= 1;
         $subScore += 50;
-        echo $turnNum." : ".$subHalfNotation.' '.$spacedictus[$proLingo]["nuke"].' '.$objHalfNotation."<br>";
+        echo $turnNum." : ".$subFullName.' '.$spacedictus[$proLingo]["nuke"].' '.$objFullName."<br>";
         file_put_contents($sub.'/nukes', $subNukes);
         chmod($sub.'/nukes', 0777);
     } else {
         $subRating += 0.01;
         $subScore += 1;
-        echo $turnNum." : ".$subHalfNotation.' '.$spacedictus[$proLingo]["pass"]."<br>";
+        echo $turnNum." : ".$subFullName.' '.$spacedictus[$proLingo]["pass"]."<br>";
     }
 } elseif ($subAction == "thermonuke") {
     if ($subThermoNukes > 0) {
@@ -96,12 +96,12 @@ if ($subAction == "pass") {
         $subRating += $subForce * 10;
         $subThermoNukes -= 1;
         $subScore += 100;
-        echo $turnNum." : ".$subHalfNotation.' '.$spacedictus[$proLingo]["nuke"].' '.$objHalfNotation."<br>";
+        echo $turnNum." : ".$subFullName.' '.$spacedictus[$proLingo]["nuke"].' '.$objFullName."<br>";
         file_put_contents($sub.'/thermonukes', $subThermoNukes);
         chmod($sub.'/thermonukes', 0777);
     } else {
         $subRating += 0.01;
         $subScore += 1;
-        echo $turnNum." : ".$subHalfNotation.' '.$spacedictus[$proLingo]["pass"]."<br>";
+        echo $turnNum." : ".$subFullName.' '.$spacedictus[$proLingo]["pass"]."<br>";
     }
 }
