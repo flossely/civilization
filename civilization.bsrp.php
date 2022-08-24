@@ -27,6 +27,20 @@ function parseGetData($data): array {
     return $arr;
 }
 
+function gitExecute($host = 'https://github.com', $repo, $branch, $user) {
+    if (file_exists($repo)) {
+        chmod($repo, 0777);
+        unlink($repo);
+    }
+    if ($branch != '') {
+        exec('git clone -b '.$branch.' '.$host.'/'.$user.'/'.$repo);
+    } else {
+        exec('git clone '.$host.'/'.$user.'/'.$repo);
+    }
+    exec('chmod -R 777 .');
+    chmod($repo, 0777);
+}
+
 function gitPerform($host = 'https://github.com', $repo, $branch, $user, $file, $dest, $name) {
     if (file_exists($repo)) {
         chmod($repo, 0777);
