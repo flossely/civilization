@@ -232,3 +232,9 @@ file_put_contents($add.'/civinfo.txt', $civinfo);
 chmod($add.'/civinfo.txt', 0777);
 
 gitPerform('https://github.com', $add.'-'.$era, 'main', 'civhub', 'favicon.png', $add, 'favicon.png');
+if (isset($objMeta['weapon'])) {
+    gitPerform('https://github.com', 'equipment', $paradigm, 'wholemarket', $objMeta['weapon'].'.weapon.obj', $add, $objMeta['weapon'].'.weapon.obj');
+}
+if (isset($objMeta['shield'])) {
+    gitPerform('https://github.com', 'equipment', $paradigm, 'wholemarket', $objMeta['shield'].'.shield.obj', $add, $objMeta['shield'].'.shield.obj');
+}
