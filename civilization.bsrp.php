@@ -231,7 +231,7 @@ $civinfo = $civbard . ' (' . $civ[$add]['var'][$era]['economy'] . ' ' . $civ[$ad
 file_put_contents($add.'/civinfo.txt', $civinfo);
 chmod($add.'/civinfo.txt', 0777);
 
-gitPerform('https://github.com', $add.'-'.$era, 'main', 'civhub', 'favicon.png', $add, 'favicon.png');
+gitPerform('https://github.com', $add.'-ico', 'main', 'civhub', 'era-'.$era.'.png', $add, 'favicon.png');
 if (isset($objMeta['weapon'])) {
     gitPerform('https://github.com', 'equipment', $paradigm, 'wholemarket', $objMeta['weapon'].'.weapon.obj', $add, $objMeta['weapon'].'.weapon.obj');
 }

@@ -80,6 +80,32 @@ if ($objUseWeapon !== null) {
     $objForce = 1;
 }
 
+$proUseShield = shopFor('.', 'shield');
+$subUseShield = shopFor($sub, 'shield');
+$objUseShield = shopFor($obj, 'shield');
+
+if ($proUseShield !== null) {
+    $proShieldType = $proUseShield['name'];
+    $proShield = $proUseShield['defense'];
+} else {
+    $proShieldType = 'none';
+    $proShield = 0;
+}
+if ($subUseShield !== null) {
+    $subShieldType = $subUseShield['name'];
+    $subShield = $subUseShield['defense'];
+} else {
+    $subShieldType = 'none';
+    $subShield = 0;
+}
+if ($objUseShield !== null) {
+    $objShieldType = $objUseShield['name'];
+    $objShield = $objUseShield['defense'];
+} else {
+    $objShieldType = 'none';
+    $objShield = 0;
+}
+
 $proUseBomb = shopFor('.', 'bomb');
 $subUseBomb = shopFor($sub, 'bomb');
 $objUseBomb = shopFor($obj, 'bomb');
