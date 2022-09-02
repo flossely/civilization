@@ -1,15 +1,11 @@
 <?php
 
-$subActions = ["weapon", "bomb"];
+$subActions = ["pass"];
 $subActionCount = count($subActions);
 $subAction = $subActions[rand(0, $subActionCount - 1)];
 
-if ($subAction == "weapon") {
-    $msgBox = initExchange($thisParadigm, $yearToday, $obj, $sub, $objMoney, $subMoney, ratioCalc($objEconVal, $subEconVal), $objUseWeapon);
-    $objMoney = $msgBox['debit'];
-    $subMoney = $msgBox['credit'];
-} elseif ($subAction == "bomb") {
-    $msgBox = initExchange($thisParadigm, $yearToday, $obj, $sub, $objMoney, $subMoney, ratioCalc($objEconVal, $subEconVal), $objUseBomb);
-    $objMoney = $msgBox['debit'];
-    $subMoney = $msgBox['credit'];
+if ($subAction == "pass") {
+    $subRating += 0.1;
+    $subScore += 0.1;
+    echo $turnNum." : ".$subFullName.' '.$spacedictus[$proLingo]["pass"]."<br>";
 }
