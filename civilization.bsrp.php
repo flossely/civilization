@@ -84,9 +84,9 @@ if (file_exists('year')) {
 
 if (file_exists('locale')) {
     $localeOpen = file_get_contents('locale');
-    $locale = ($localeOpen != '') ? $localeOpen : 'en';
+    $locale = ($localeOpen != '') ? $localeOpen : $paradigmData['default_zone'];
 } else {
-    $locale = 'en';
+    $locale = $paradigmData['default_zone'];
 }
 $lingua = $locale;
 
@@ -175,9 +175,21 @@ if (!file_exists($add.'/born')) {
     file_put_contents($add.'/born', $today);
     chmod($add.'/born', 0777);
 }
-
 file_put_contents($add.'/locale', $lingua);
 chmod($add.'/locale', 0777);
+file_put_contents($add.'/zones', $paradigmData['default_zones']);
+chmod($add.'/zones', 0777);
+$lallzones = explode(',', $paradigmData['default_zones']);
+foreach ($lallzones as $key=>$value) {
+    if (!file_exists($add.'/'.$value.'.cur')) {
+        file_put_contents($add.'/'.$value.'.cur', $paradigmData['default_currency_sign']);
+        chmod($add.'/'.$value.'.cur', 0777);
+    }
+    if (!file_exists($add.'/'.$value.'.curval')) {
+        file_put_contents($add.'/'.$value.'.curval', $paradigmData['default_currency_value']);
+        chmod($add.'/'.$value.'.curval', 0777);
+    }
+}
 
 if (!file_exists($add.'/home.coord')) {
     file_put_contents($add.'/home.coord', $civ[$add]['coord']);
