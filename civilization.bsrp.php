@@ -75,13 +75,11 @@ if (file_exists('paradigm')) {
     $paradigm = 'default';
 }
 $paradigmData = parseArrayFile($paradigm.'.par');
-
 if (file_exists('year')) {
     $today = file_get_contents('year');
 } else {
     $today = $paradigmData['default_year'];
 }
-
 if (file_exists('locale')) {
     $localeOpen = file_get_contents('locale');
     $locale = ($localeOpen != '') ? $localeOpen : $paradigmData['default_zone'];
@@ -90,7 +88,8 @@ if (file_exists('locale')) {
 }
 $lingua = $locale;
 
-include 'cividictus.php';
+$civiductus = [];
+include $lingua.'.cividictus.php';
 
 function yearconv($year)
 {
