@@ -1,6 +1,6 @@
 <?php
 
-$cividictus['la'] =
+$cividictus['eu'] =
 [
     "ancient_era" => "Aevum Antiquum",
     "classical_era" => "Aevum Classicum",
