@@ -80,14 +80,23 @@ if (file_exists('year')) {
 } else {
     $today = $paradigmData['default_year'];
 }
+$lazones = str_replace('./','',(glob('./*.locale')));
 if (file_exists('locale')) {
-    $localeOpen = file_get_contents('locale');
-    $locale = ($localeOpen != '') ? $localeOpen : $paradigmData['default_zone'];
+    $locale = file_get_contents('locale');
 } else {
-    $locale = $paradigmData['default_zone'];
+    $locale = basename(array_key_first($lazones), '.locale');
 }
 $lingua = $locale;
-
+if (file_exists($lingua.'.cur')) {
+    $lazcur = file_get_contents($lingua.'.cur');
+} else {
+    $lazcur = $paradigmData['default_currency_sign'];
+}
+if (file_exists($lingua.'.curval')) {
+    $lazcurval = file_get_contents($lingua.'.curval');
+} else {
+    $lazcurval = $paradigmData['default_currency_value'];
+}
 $civiductus = [];
 include $lingua.'.cividictus.php';
 
