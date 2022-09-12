@@ -72,7 +72,7 @@ function gitOperation($repo, $filename, $dest, $newname) {
 if (file_exists('paradigm')) {
     $paradigm = file_get_contents('paradigm');
 } else {
-    $paradigm = 'default';
+    $paradigm = 'system';
 }
 $paradigmData = parseArrayFile($paradigm.'.par');
 if (file_exists('year')) {
