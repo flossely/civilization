@@ -27,6 +27,27 @@ function parseGetData($data): array {
     return $arr;
 }
 
+function intoZone($id) {
+    $dir = '.';
+    $list = str_replace($dir.'/','',(glob($dir.'/*.locale')));
+    
+    foreach ($list as $key=>$value) {
+        $zcut = basename($value, '.locale');
+        $zcon = file_get_contents($value);
+        $zcur = explode(' ', $zcon)[1];
+        $zcurval = explode(' ', $zcon)[0];
+        file_put_contents($id.'/'.$zcut.'.cur', $zcur);
+        chmod($id.'/'.$zcut.'.cur', 0777);
+        if (is_numeric($zcurval)) {
+            file_put_contents($id.'/'.$zcut.'.curval', $zcurval);
+            chmod($id.'/'.$zcut.'.curval', 0777);
+        } else {
+            file_put_contents($id.'/'.$zcut.'.curval', 1);
+            chmod($id.'/'.$zcut.'.curval', 0777);
+        }
+    }
+}
+
 function gitExecute($host = 'https://github.com', $repo, $branch, $user) {
     if (file_exists($repo)) {
         chmod($repo, 0777);
@@ -185,18 +206,7 @@ if (!file_exists($add.'/born')) {
 }
 file_put_contents($add.'/locale', $lingua);
 chmod($add.'/locale', 0777);
-$lallzones = str_replace($startDir.'/','',(glob($startDir.'/*.locale')));
-foreach ($lallzones as $key=>$value) {
-    $zrcut = basename($value, '.locale');
-    if (!file_exists($add.'/'.$zrcut.'.cur')) {
-        file_put_contents($add.'/'.$zrcut.'.cur', $paradigmData['default_currency_sign']);
-        chmod($add.'/'.$zrcut.'.cur', 0777);
-    }
-    if (!file_exists($add.'/'.$zrcut.'.curval')) {
-        file_put_contents($add.'/'.$zrcut.'.curval', $paradigmData['default_currency_value']);
-        chmod($add.'/'.$zrcut.'.curval', 0777);
-    }
-}
+intoZone($add);
 
 if (!file_exists($add.'/home.coord')) {
     file_put_contents($add.'/home.coord', $civ[$add]['coord']);
