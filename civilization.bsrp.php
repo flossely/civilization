@@ -108,16 +108,12 @@ if (file_exists('locale')) {
     $locale = basename(array_key_first($lazones), '.locale');
 }
 $lingua = $locale;
-if (file_exists($lingua.'.cur')) {
-    $lazcur = file_get_contents($lingua.'.cur');
+if (file_exists('mode')) {
+    $mode = file_get_contents('mode');
 } else {
-    $lazcur = $paradigmData['default_currency_sign'];
+    $mode = $paradigmData['default_mode'];
 }
-if (file_exists($lingua.'.curval')) {
-    $lazcurval = file_get_contents($lingua.'.curval');
-} else {
-    $lazcurval = $paradigmData['default_currency_value'];
-}
+
 $civiductus = [];
 include $lingua.'.cividictus.php';
 
@@ -164,9 +160,9 @@ include 'civeramap.php';
 $civ = [];
 $add = $_REQUEST['id'];
 $era = erayear($today);
-$dataString = $_REQUEST['data'];
+$data = $_REQUEST['data'];
 
-$objMeta = parseGetData($dataString);
+$meta = parseGetData($data);
 
 gitPerform('https://github.com', $add.'-civ', '', 'civhub', $add.'.civ.php', $add, $add.'.civ.php');
 
@@ -188,10 +184,8 @@ if (!file_exists($add.'/rating')) {
     file_put_contents($add.'/rating', $civeramap[$era]['rating']);
     chmod($add.'/rating', 0777);
 }
-if (!file_exists($add.'/mode')) {
-    file_put_contents($add.'/mode', $$paradigmData['default_mode']);
-    chmod($add.'/mode', 0777);
-}
+file_put_contents($add.'/mode', $mode);
+chmod($add.'/mode', 0777);
 if (!file_exists($add.'/score')) {
     file_put_contents($add.'/score', $paradigmData['default_score']);
     chmod($add.'/score', 0777);
@@ -261,9 +255,9 @@ file_put_contents($add.'/civinfo.txt', $civinfo);
 chmod($add.'/civinfo.txt', 0777);
 
 gitPerform('https://github.com', $add.'-ico', 'main', 'civhub', 'era-'.$era.'.png', $add, 'favicon.png');
-if (isset($objMeta['weapon'])) {
-    gitPerform('https://github.com', 'equipment', $paradigm, 'wholemarket', $objMeta['weapon'].'.weapon.obj', $add, $objMeta['weapon'].'.weapon.obj');
+if (isset($meta['weapon'])) {
+    gitPerform('https://github.com', 'equipment', $paradigm, 'wholemarket', $meta['weapon'].'.weapon.obj', $add, $meta['weapon'].'.weapon.obj');
 }
-if (isset($objMeta['shield'])) {
-    gitPerform('https://github.com', 'equipment', $paradigm, 'wholemarket', $objMeta['shield'].'.shield.obj', $add, $objMeta['shield'].'.shield.obj');
+if (isset($meta['shield'])) {
+    gitPerform('https://github.com', 'equipment', $paradigm, 'wholemarket', $meta['shield'].'.shield.obj', $add, $meta['shield'].'.shield.obj');
 }
