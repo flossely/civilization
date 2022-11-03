@@ -15,5 +15,5 @@ if ($subAction == "pass") {
     $actBox = initMine($sub);
     $subMoney = $actBox['money'];
     $subDispCurSign = $actBox['sign'];
-    echo $turnNum." : ".$subFullName.' '.$spacedictus[$proLingo]["mine"].$subDispCurSign.$subMoney."<br>";
+    echo $turnNum." : ".$subFullName.' '.$spacedictus[$proLingo]["mine"].' '.$subDispCurSign.$subMoney."<br>";
 }
