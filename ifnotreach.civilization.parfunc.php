@@ -8,12 +8,12 @@ if ($subAction == "pass") {
     $subRating += 1;
     $subMoney += 1;
     $subScore += 1;
-    echo $turnNum." : ".$subFullName.' '.$actbook[$proLingo]['200']."<br>";
+    echo $turnNum." : ".$subFullName.' '.$diction[$proLingo]['action']['200']."<br>";
 } elseif ($subAction == "mine") {
     $subRating += 1;
     $subScore += 1;
     $actBox = initMine($sub);
     $subMoney = $actBox['money'];
     $subDispCurSign = $actBox['sign'];
-    echo $turnNum." : ".$subFullName.' '.$actbook[$proLingo]['100'].' '.$subDispCurSign.$subMoney."<br>";
+    echo $turnNum." : ".$subFullName.' '.$diction[$proLingo]['action']['100'].' '.$subDispCurSign.$subMoney."<br>";
 }
